@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Google Reviews Carousel</title>
+    <link rel="stylesheet" href="GoogleReviews.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Paste your existing CSS here */
+    </style>
+  </head>
+  <body>
+    <div id="googleReviews" class="sq-googleReviews">
+      <h2 class="sq-googleReviews__title">What Our Customers Say</h2>
+
+      <!-- Summary -->
+      <div class="sq-googleReviews__summary">
+        <div class="sq-googleReviews__summary-left">
+          <div class="sq-googleReviews__summary-header">
+            <img
+              src="/google.svg"
+              alt="Google"
+              class="sq-googleReviews__googleIcon"
+            />
+            <span class="sq-googleReviews__label">Reviews</span>
+          </div>
+          <div class="sq-googleReviews__summary-rating">
+            <span class="sq-googleReviews__score">4.7</span>
+            <div id="summaryStars" class="sq-googleReviews__stars"></div>
+            <span class="sq-googleReviews__count">(16,865)</span>
+          </div>
+        </div>
+        <div class="sq-googleReviews__summary-action">
+          <a
+            href="https://www.google.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="sq-googleReviews__button"
+          >
+            Review us on Google
+          </a>
+        </div>
+      </div>
+
+      <!-- Carousel -->
+      <div class="sq-googleReviews-carousel">
+        <button
+          class="sq-googleReviews-carousel__button sq-googleReviews-carousel__button--left"
+          id="prevBtn"
+        >
+          ‹
+        </button>
+        <div class="sq-googleReviews-carousel__viewport" id="carouselViewport">
+          <div
+            class="sq-googleReviews-carousel__track"
+            id="carouselTrack"
+          ></div>
+        </div>
+        <button
+          class="sq-googleReviews-carousel__button sq-googleReviews-carousel__button--right"
+          id="nextBtn"
+        >
+          ›
+        </button>
+        <div
+          class="sq-googleReviews-carousel__indicators"
+          id="carouselIndicators"
+        ></div>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div
+      class="sq-googleReview_reviewModal-overlay"
+      id="reviewModal"
+      style="display: none"
+    >
+      <div class="sq-googleReview_reviewModal" id="modalContent">
+        <button class="sq-googleReview_reviewModal-close" id="modalClose">
+          ✕
+        </button>
+        <div class="sq-googleReview_reviewModal-header">
+          <div
+            class="sq-googleReview_reviewModal-avatar"
+            id="modalAvatar"
+          ></div>
+          <div class="sq-googleReview_reviewModal-info">
+            <div class="sq-googleReview_reviewModal-nameRow">
+              <span
+                class="sq-googleReview_reviewModal-name"
+                id="modalName"
+              ></span>
+              <span class="sq-googleReview_reviewModal-verifiedWrapper">
+                <img
+                  src="/verified.svg"
+                  alt="verified"
+                  class="sq-googleReview_reviewModal-verified"
+                  id="modalVerified"
+                />
+              </span>
+            </div>
+            <div class="sq-googleReview_reviewModal-date" id="modalDate"></div>
+          </div>
+        </div>
+        <div class="sq-googleReview_reviewModal-stars" id="modalStars"></div>
+        <div class="sq-googleReview_reviewModal-text" id="modalText"></div>
+      </div>
+    </div>
+
+    <script>
+      const reviews = [
+        {
+          id: 4,
+          name: "Sophia Martinez",
+          verified: true,
+          date: "2 days ago",
+          rating: 5,
+          text: "Absolutely loved it! Perfect for a family outing, and the view is stunning at sunset. Absolutely loved it! Perfect for a family outing, and the view is stunning at sunset.",
+          avatar: "https://i.pravatar.cc/40?img=1",
+        },
+        {
+          id: 5,
+          name: "Michael Chen",
+          verified: true,
+          date: "3 days ago",
+          rating: 3.7,
+          text: "Good experience overall but parking was difficult to find.",
+          avatar: "https://i.pravatar.cc/40?img=2",
+        },
+        {
+          id: 6,
+          name: "Isabella Rossi",
+          verified: true,
+          date: "3 days ago",
+          rating: 2.5,
+          text: "The place was too crowded, couldn't enjoy as much as I hoped.",
+          avatar: "https://i.pravatar.cc/40?img=3",
+        },
+        {
+          id: 7,
+          name: "Daniel Kim",
+          verified: false,
+          date: "4 days ago",
+          rating: 4.5,
+          text: "Loved the architecture, the science exhibits are engaging for kids.",
+          avatar: "https://i.pravatar.cc/40?img=4",
+        },
+        {
+          id: 8,
+          name: "Emily Johnson",
+          verified: true,
+          date: "5 days ago",
+          rating: 3,
+          text: "The view is nice but the cafe prices are too high.",
+          avatar: "https://i.pravatar.cc/40?img=5",
+        },
+        {
+          id: 9,
+          name: "Carlos Mendoza",
+          verified: true,
+          date: "6 days ago",
+          rating: 5,
+          text: "Un lugar increíble para visitar con amigos, las fotos salen espectaculares!",
+          avatar: "https://i.pravatar.cc/40?img=6",
+        },
+        {
+          id: 10,
+          name: "Ava Brown",
+          verified: false,
+          date: "6 days ago",
+          rating: 4.2,
+          text: "Great spot for photography, but prepare for long lines.",
+          avatar: "https://i.pravatar.cc/40?img=7",
+        },
+        {
+          id: 11,
+          name: "James Wilson",
+          verified: true,
+          date: "1 week ago",
+          rating: 3.8,
+          text: "Good location, parking and entry process can be improved.",
+          avatar: "https://i.pravatar.cc/40?img=8",
+        },
+        {
+          id: 12,
+          name: "Olivia Davis",
+          verified: true,
+          date: "1 week ago",
+          rating: 5,
+          text: "Hands down the best experience of my LA trip!",
+          avatar: "https://i.pravatar.cc/40?img=9",
+        },
+      ];
+
+      const track = document.getElementById("carouselTrack");
+      const indicators = document.getElementById("carouselIndicators");
+      const viewport = document.getElementById("carouselViewport");
+      const modal = document.getElementById("reviewModal");
+      const modalClose = document.getElementById("modalClose");
+      const modalName = document.getElementById("modalName");
+      const modalAvatar = document.getElementById("modalAvatar");
+      const modalVerified = document.getElementById("modalVerified");
+      const modalDate = document.getElementById("modalDate");
+      const modalStars = document.getElementById("modalStars");
+      const modalText = document.getElementById("modalText");
+
+      let currentIndex = 0;
+      let itemsToShow = 1;
+      const minCardWidth = 250;
+
+      function createStarRating(value) {
+        const container = document.createElement("div");
+        container.className = "sq-googleReviews__stars";
+
+        for (let i = 1; i <= 5; i++) {
+          const star = document.createElement("span");
+          star.className = "sq-googleReviews__star";
+
+          if (value >= i) {
+            star.classList.add("sq-googleReviews__star--full");
+          } else if (value > i - 1) {
+            // fractional star
+            star.classList.add("sq-googleReviews__star--fractional");
+            star.style.setProperty("--fill", value - (i - 1));
+          }
+
+          container.appendChild(star);
+        }
+
+        return container;
+      }
+
+      function renderSummaryStars() {
+        const summaryStars = document.getElementById("summaryStars");
+        summaryStars.innerHTML = "";
+        summaryStars.appendChild(createStarRating(4.7));
+      }
+
+      function renderCarousel() {
+        track.innerHTML = "";
+        reviews.forEach((review) => {
+          const card = document.createElement("div");
+          card.className = "sq-googleReviews-carousel__card";
+
+          const reviewCard = document.createElement("div");
+          reviewCard.className = "sq-googleReviews__reviewCard";
+
+          // ----- Header -----
+          const header = document.createElement("div");
+          header.className = "sq-googleReviews__reviewCard-headerSection";
+
+          const cardHeader = document.createElement("div");
+          cardHeader.className = "sq-googleReviews__reviewCard-header";
+
+          const avatar = document.createElement("div");
+          avatar.className = "sq-googleReviews__reviewCard-avatar";
+          if (review.avatar) {
+            const img = document.createElement("img");
+            img.src = review.avatar;
+            img.alt = review.name;
+            avatar.appendChild(img);
+          } else {
+            avatar.textContent = review.name[0];
+          }
+          cardHeader.appendChild(avatar);
+
+          const info = document.createElement("div");
+          info.className = "sq-googleReviews__reviewCard-info";
+
+          const nameRow = document.createElement("div");
+          nameRow.className = "sq-googleReviews__reviewCard-nameSection";
+          const nameText = document.createElement("span");
+          nameText.className = "sq-googleReviews__reviewCard-nameText";
+          nameText.textContent = review.name;
+          nameRow.appendChild(nameText);
+
+          if (review.verified) {
+            const verifiedIcon = document.createElement("img");
+            verifiedIcon.src = "/verified.svg";
+            verifiedIcon.alt = "verified";
+            verifiedIcon.className = "sq-googleReviews__reviewCard-verified";
+            nameRow.appendChild(verifiedIcon);
+          }
+
+          info.appendChild(nameRow);
+
+          const date = document.createElement("div");
+          date.className = "sq-googleReviews__reviewCard-date";
+          date.textContent = review.date;
+          info.appendChild(date);
+
+          cardHeader.appendChild(info);
+          header.appendChild(cardHeader);
+
+          const starsContainer = document.createElement("div");
+          starsContainer.className = "sq-googleReviews__reviewCard-stars";
+          starsContainer.appendChild(createStarRating(review.rating));
+          header.appendChild(starsContainer);
+
+          reviewCard.appendChild(header);
+
+          // ----- Content -----
+          const content = document.createElement("div");
+          content.className = "sq-googleReviews__reviewCard-contentSection";
+
+          const text = document.createElement("span");
+          text.className = "sq-googleReviews__reviewCard-text";
+          text.textContent = review.text;
+          content.appendChild(text);
+
+          // --- Overflow detection ---
+          requestAnimationFrame(() => {
+            const isOverflowing = text.scrollHeight > text.clientHeight;
+            if (isOverflowing) {
+              const readMore = document.createElement("a");
+              readMore.className = "sq-googleReviews__reviewCard-readMore";
+              readMore.textContent = "Read more";
+              readMore.href = "#";
+              readMore.addEventListener("click", (e) => {
+                e.preventDefault();
+                openModal(review);
+              });
+              content.appendChild(readMore);
+            }
+          });
+
+          reviewCard.appendChild(content);
+          card.appendChild(reviewCard);
+          track.appendChild(card);
+        });
+
+        updateCarouselPosition();
+        renderIndicators();
+      }
+
+      function updateCarouselPosition() {
+        const percent = (100 / itemsToShow) * currentIndex;
+        track.style.transform = `translateX(-${percent}%)`;
+        track.style.gridTemplateColumns = `repeat(${reviews.length}, ${
+          100 / itemsToShow
+        }%)`;
+      }
+
+      function renderIndicators() {
+        indicators.innerHTML = "";
+        for (let i = 0; i <= reviews.length - itemsToShow; i++) {
+          const dot = document.createElement("div");
+          dot.className = i === currentIndex ? "dots-active" : "dots-far";
+          dot.addEventListener("click", () => {
+            currentIndex = i;
+            updateCarouselPosition();
+            renderIndicators();
+          });
+          indicators.appendChild(dot);
+        }
+
+        // 🔥 ensure active dot is visible
+        const activeDot = indicators.querySelector(".dots-active");
+        if (activeDot) {
+          activeDot.scrollIntoView({
+            behavior: "smooth",
+            inline: "center",
+            block: "nearest",
+          });
+        }
+      }
+
+      function resizeCarousel() {
+        const viewportWidth = viewport.offsetWidth;
+        const possibleItems = Math.floor(viewportWidth / minCardWidth);
+        itemsToShow = Math.max(1, Math.min(reviews.length, possibleItems));
+        if (currentIndex > reviews.length - itemsToShow)
+          currentIndex = reviews.length - itemsToShow;
+        updateCarouselPosition();
+        renderIndicators();
+      }
+
+      window.addEventListener("resize", resizeCarousel);
+
+      document.getElementById("prevBtn").addEventListener("click", () => {
+        if (currentIndex > 0) currentIndex--;
+        updateCarouselPosition();
+        renderIndicators();
+      });
+
+      document.getElementById("nextBtn").addEventListener("click", () => {
+        if (currentIndex < reviews.length - itemsToShow) currentIndex++;
+        updateCarouselPosition();
+        renderIndicators();
+      });
+
+      function openModal(review) {
+        modal.style.display = "flex";
+        modalName.textContent = review.name;
+        modalAvatar.innerHTML = review.avatar
+          ? `<img src="${review.avatar}" alt="${review.name}">`
+          : review.name[0];
+        modalVerified.style.display = review.verified ? "inline-block" : "none";
+        modalDate.textContent = review.date;
+        modalStars.innerHTML = "";
+        modalStars.appendChild(createStarRating(review.rating));
+        modalText.textContent = review.text;
+      }
+
+      modalClose.addEventListener("click", () => {
+        modal.style.display = "none";
+      });
+
+      modal.addEventListener("click", () => {
+        modal.style.display = "none";
+      });
+
+      document.getElementById("modalContent").addEventListener("click", (e) => {
+        e.stopPropagation();
+      });
+
+      // Drag/swipe
+      let startX = 0;
+      let isDragging = false;
+
+      viewport.addEventListener("mousedown", (e) => {
+        startX = e.clientX;
+        isDragging = true;
+      });
+      viewport.addEventListener("mousemove", (e) => {
+        if (!isDragging) return;
+      });
+      viewport.addEventListener("mouseup", (e) => {
+        handleEnd(e.clientX);
+      });
+      viewport.addEventListener("mouseleave", (e) => {
+        handleEnd(e.clientX);
+      });
+
+      viewport.addEventListener("touchstart", (e) => {
+        startX = e.touches[0].clientX;
+        isDragging = true;
+      });
+      viewport.addEventListener("touchend", (e) => {
+        handleEnd(e.changedTouches[0].clientX);
+      });
+
+      function handleEnd(x) {
+        if (!isDragging) return;
+        const diff = x - startX;
+        isDragging = false;
+        if (Math.abs(diff) > 50) {
+          if (diff < 0 && currentIndex < reviews.length - itemsToShow)
+            currentIndex++;
+          if (diff > 0 && currentIndex > 0) currentIndex--;
+          updateCarouselPosition();
+          renderIndicators();
+        }
+      }
+
+      // Initial render
+      renderSummaryStars();
+      renderCarousel();
+      resizeCarousel();
+    </script>
+  </body>
+</html>
