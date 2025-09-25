@@ -536,6 +536,10 @@
   font-size: 1rem;
 }
 
+.sq-googleReviews__stars{
+    display: flex;
+}
+
 .sq-googleReview_reviewModal-text {
   font-size: 0.95rem;
   color: #333;
