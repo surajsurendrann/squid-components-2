@@ -499,6 +499,19 @@
         flex-direction: column;
         gap: 1rem;
         font-family: "Poppins", Helvetica, "Helvetica Neue", sans-serif;
+        max-height: 80vh;
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: #ccc transparent;
+        clip-path: inset(0 round 12px);
+      }
+      .sq-googleReview_reviewModal::-webkit-scrollbar-thumb {
+        background: #ccc;
+        border-radius: 8px;
+      }
+      .sq-googleReview_reviewModal::-webkit-scrollbar {
+        width: 0px;
+        background: transparent;
       }
       .sq-googleReview_reviewModal-nameRow {
         display: flex;
@@ -574,10 +587,11 @@
       }
 
       .sq-googleReview_reviewModal-text {
-        font-size: 0.95rem;
+        font-size: 18px;
         color: #333;
         line-height: 1.5;
         text-align: left;
+        text-overflow: ellipsis;
       }
 
       .sq-googleReview_reviewModal-date {
@@ -614,7 +628,10 @@
           </div>
           <div class="sq-googleReviews__summary-rating">
             <span class="sq-googleReviews__score">4.7</span>
-            <div id="sq-googlereview-summaryStars" class="sq-googleReviews__stars"></div>
+            <div
+              id="sq-googlereview-summaryStars"
+              class="sq-googleReviews__stars"
+            ></div>
             <span class="sq-googleReviews__count">(16,865)</span>
           </div>
         </div>
@@ -638,7 +655,10 @@
         >
           ‹
         </button>
-  <div class="sq-googleReviews-carousel__viewport" id="sq-googlereview-carouselViewport">
+        <div
+          class="sq-googleReviews-carousel__viewport"
+          id="sq-googlereview-carouselViewport"
+        >
           <div
             class="sq-googleReviews-carousel__track"
             id="sq-googlereview-carouselTrack"
@@ -660,11 +680,17 @@
     <!-- Modal -->
     <div
       class="sq-googleReview_reviewModal-overlay"
-  id="sq-googlereview-reviewModal"
+      id="sq-googlereview-reviewModal"
       style="display: none"
     >
-  <div class="sq-googleReview_reviewModal" id="sq-googlereview-modalContent">
-  <button class="sq-googleReview_reviewModal-close" id="sq-googlereview-modalClose">
+      <div
+        class="sq-googleReview_reviewModal"
+        id="sq-googlereview-modalContent"
+      >
+        <button
+          class="sq-googleReview_reviewModal-close"
+          id="sq-googlereview-modalClose"
+        >
           ✕
         </button>
         <div class="sq-googleReview_reviewModal-header">
@@ -687,11 +713,20 @@
                 />
               </span>
             </div>
-            <div class="sq-googleReview_reviewModal-date" id="sq-googlereview-modalDate"></div>
+            <div
+              class="sq-googleReview_reviewModal-date"
+              id="sq-googlereview-modalDate"
+            ></div>
           </div>
         </div>
-  <div class="sq-googleReview_reviewModal-stars" id="sq-googlereview-modalStars"></div>
-  <div class="sq-googleReview_reviewModal-text" id="sq-googlereview-modalText"></div>
+        <div
+          class="sq-googleReview_reviewModal-stars"
+          id="sq-googlereview-modalStars"
+        ></div>
+        <div
+          class="sq-googleReview_reviewModal-text"
+          id="sq-googlereview-modalText"
+        ></div>
       </div>
     </div>
 
@@ -703,7 +738,7 @@
           verified: true,
           date: "2 days ago",
           rating: 5,
-          text: "Absolutely loved it! Perfect for a family outing, Absolutely loved it! Perfect for a family outingAbsolutely loved itAbsolutely loved it! Perfect for a family outing! Perfect for a family outing and the view is stunning at sunset. Absolutely loved it! Perfect for a family outing, and the view is stunning at sunset.",
+          text: "Absolutely loved it! Perfect for a family outing, Absolutely loved it! Perfect for a family outingAbsolutely loved itAbsolutely loved it! Perfect for a family outing! Perfect for a family outing and the view is stunning at sunset. Absolutely loved it! Perfect for a family outing, and the view is stunning at sunset.Absolutely loved it! Perfect for a family outing, Absolutely loved it! Perfect for a family outingAbsolutely loved itAbsolutely loved it! Perfect for a family outing! Perfect for a family outing and the view is stunning at sunset. Absolutely loved it! Perfect for a family outing, and the view is stunning at sunset.Absolutely loved it! Perfect for a family outing, Absolutely loved it! Perfect for a family outingAbsolutely loved itAbsolutely loved it! Perfect for a family outing! Perfect for a family outing and the view is stunning at sunset. Absolutely loved it! Perfect for a family outing, and the view is stunning at sunset.Absolutely loved it! Perfect for a family outing, Absolutely loved it! Perfect for a family outingAbsolutely loved itAbsolutely loved it! Perfect for a family outing! Perfect for a family outing and the view is stunning at sunset. Absolutely loved it! Perfect for a family outing, and the view is stunning at sunset.Absolutely loved it! Perfect for a family outing, Absolutely loved it! Perfect for a family outingAbsolutely loved itAbsolutely loved it! Perfect for a family outing! Perfect for a family outing and the view is stunning at sunset. Absolutely loved it! Perfect for a family outing, and the view is stunning at sunset.Absolutely loved it! Perfect for a family outing, Absolutely loved it! Perfect for a family outingAbsolutely loved itAbsolutely loved it! Perfect for a family outing! Perfect for a family outing and the view is stunning at sunset. Absolutely loved it! Perfect for a family outing, and the view is stunning at sunset.Absolutely loved it! Perfect for a family outing, Absolutely loved it! Perfect for a family outingAbsolutely loved itAbsolutely loved it! Perfect for a family outing! Perfect for a family outing and the view is stunning at sunset. Absolutely loved it! Perfect for a family outing, and the view is stunning at sunset.",
           // avatar: "https://i.pravatar.cc/40?img=1",
         },
         {
@@ -780,17 +815,25 @@
         },
       ];
 
-  const track = document.getElementById("sq-googlereview-carouselTrack");
-  const indicators = document.getElementById("sq-googlereview-carouselIndicators");
-  const viewport = document.getElementById("sq-googlereview-carouselViewport");
-  const modal = document.getElementById("sq-googlereview-reviewModal");
-  const modalClose = document.getElementById("sq-googlereview-modalClose");
-  const modalName = document.getElementById("sq-googlereview-modalName");
-  const modalAvatar = document.getElementById("sq-googlereview-modalAvatar");
-  const modalVerified = document.getElementById("sq-googlereview-modalVerified");
-  const modalDate = document.getElementById("sq-googlereview-modalDate");
-  const modalStars = document.getElementById("sq-googlereview-modalStars");
-  const modalText = document.getElementById("sq-googlereview-modalText");
+      const track = document.getElementById("sq-googlereview-carouselTrack");
+      const indicators = document.getElementById(
+        "sq-googlereview-carouselIndicators"
+      );
+      const viewport = document.getElementById(
+        "sq-googlereview-carouselViewport"
+      );
+      const modal = document.getElementById("sq-googlereview-reviewModal");
+      const modalClose = document.getElementById("sq-googlereview-modalClose");
+      const modalName = document.getElementById("sq-googlereview-modalName");
+      const modalAvatar = document.getElementById(
+        "sq-googlereview-modalAvatar"
+      );
+      const modalVerified = document.getElementById(
+        "sq-googlereview-modalVerified"
+      );
+      const modalDate = document.getElementById("sq-googlereview-modalDate");
+      const modalStars = document.getElementById("sq-googlereview-modalStars");
+      const modalText = document.getElementById("sq-googlereview-modalText");
 
       let currentIndex = 0;
       let itemsToShow = 1;
@@ -819,7 +862,9 @@
       }
 
       function renderSummaryStars() {
-        const summaryStars = document.getElementById("sq-googlereview-summaryStars");
+        const summaryStars = document.getElementById(
+          "sq-googlereview-summaryStars"
+        );
         summaryStars.innerHTML = "";
         summaryStars.appendChild(createStarRating(4.7));
       }
@@ -971,17 +1016,21 @@
 
       window.addEventListener("resize", resizeCarousel);
 
-  document.getElementById("sq-googlereview-prevBtn").addEventListener("click", () => {
-        if (currentIndex > 0) currentIndex--;
-        updateCarouselPosition();
-        renderIndicators();
-      });
+      document
+        .getElementById("sq-googlereview-prevBtn")
+        .addEventListener("click", () => {
+          if (currentIndex > 0) currentIndex--;
+          updateCarouselPosition();
+          renderIndicators();
+        });
 
-  document.getElementById("sq-googlereview-nextBtn").addEventListener("click", () => {
-        if (currentIndex < reviews.length - itemsToShow) currentIndex++;
-        updateCarouselPosition();
-        renderIndicators();
-      });
+      document
+        .getElementById("sq-googlereview-nextBtn")
+        .addEventListener("click", () => {
+          if (currentIndex < reviews.length - itemsToShow) currentIndex++;
+          updateCarouselPosition();
+          renderIndicators();
+        });
 
       function openModal(review) {
         modal.style.display = "flex";
@@ -1004,9 +1053,11 @@
         modal.style.display = "none";
       });
 
-  document.getElementById("sq-googlereview-modalContent").addEventListener("click", (e) => {
-        e.stopPropagation();
-      });
+      document
+        .getElementById("sq-googlereview-modalContent")
+        .addEventListener("click", (e) => {
+          e.stopPropagation();
+        });
 
       // Drag/swipe
       let startX = 0;
