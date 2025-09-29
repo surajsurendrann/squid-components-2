@@ -9,9 +9,6 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
-    <style>
-      /* Paste your existing CSS here */
-    </style>
   </head>
   <body>
     <div id="googleReviews" class="sq-googleReviews">
@@ -255,6 +252,13 @@
 
           const cardHeader = document.createElement("div");
           cardHeader.className = "sq-googleReviews__reviewCard-header";
+
+          // Google badge (outside avatar)
+          const badge = document.createElement("img");
+          badge.src = "/google-g.svg";
+          badge.alt = "Google";
+          badge.className = "sq-googleReviews__reviewCard-googleBadge";
+          cardHeader.appendChild(badge);
 
           const avatar = document.createElement("div");
           avatar.className = "sq-googleReviews__reviewCard-avatar";

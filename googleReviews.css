@@ -91,8 +91,10 @@
   height: 22px;
   display: inline-block;
   background-color: #d2d2d2; /* fallback gray */
-  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 .587l3.668 7.431 8.2 1.192-5.934 5.782 1.401 8.168L12 18.896l-7.335 3.864 1.401-8.168L.132 9.21l8.2-1.192z'/></svg>") no-repeat center / contain;
-  mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 .587l3.668 7.431 8.2 1.192-5.934 5.782 1.401 8.168L12 18.896l-7.335 3.864 1.401-8.168L.132 9.21l8.2-1.192z'/></svg>") no-repeat center / contain;
+  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 .587l3.668 7.431 8.2 1.192-5.934 5.782 1.401 8.168L12 18.896l-7.335 3.864 1.401-8.168L.132 9.21l8.2-1.192z'/></svg>")
+    no-repeat center / contain;
+  mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 .587l3.668 7.431 8.2 1.192-5.934 5.782 1.401 8.168L12 18.896l-7.335 3.864 1.401-8.168L.132 9.21l8.2-1.192z'/></svg>")
+    no-repeat center / contain;
 }
 
 /* Fully filled star */
@@ -455,6 +457,20 @@
   cursor: pointer;
 }
 
+.sq-googleReviews__reviewCard-googleBadge {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  border: 1px solid #eee;
+  padding: 2px;
+  z-index: 2;
+}
+
 .sq-googleReview_reviewModal {
   background: #fff;
   border-radius: 12px;
@@ -536,8 +552,8 @@
   font-size: 1rem;
 }
 
-.sq-googleReviews__stars{
-    display: flex;
+.sq-googleReviews__stars {
+  display: flex;
 }
 
 .sq-googleReview_reviewModal-text {
