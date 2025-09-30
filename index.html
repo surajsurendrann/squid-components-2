@@ -731,7 +731,7 @@
     </div>
 
     <script>
-      const reviews = [
+      const mockReviews = [
         {
           id: 4,
           name: "Sophia Martinez",
@@ -814,6 +814,22 @@
           avatar: "https://i.pravatar.cc/40?img=9",
         },
       ];
+
+      let reviews = [];
+
+      async function fetchReviews() {
+        try {
+          const res = await fetch("reviews.json");
+          const data = mockReviews;
+          reviews = data;
+
+          renderSummaryStars();
+          renderCarousel();
+          resizeCarousel();
+        } catch (err) {
+          console.error("Error fetching reviews:", err);
+        }
+      }
 
       const track = document.getElementById("sq-googlereview-carouselTrack");
       const indicators = document.getElementById(
@@ -1098,10 +1114,8 @@
         }
       }
 
-      // Initial render
-      renderSummaryStars();
-      renderCarousel();
-      resizeCarousel();
+      // --- Initial fetch + render ---
+      fetchReviews();
     </script>
   </body>
 </html>
